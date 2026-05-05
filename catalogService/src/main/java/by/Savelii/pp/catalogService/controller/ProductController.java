@@ -1,3 +1,4 @@
+/*
 package by.Savelii.pp.catalogService.controller;
 
 import by.Savelii.pp.catalogService.service.ProductService;
@@ -37,3 +38,4 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(productId);
     }
 }
+*/

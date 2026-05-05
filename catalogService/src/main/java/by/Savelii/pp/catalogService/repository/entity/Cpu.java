@@ -1,17 +1,18 @@
-package by.Savelii.pp.catalogService.repository;
+package by.Savelii.pp.catalogService.repository.entity;
 
 import jakarta.persistence.*;
-import jdk.jfr.Name;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.math.BigInteger;
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 
 @Entity
-@Table(name="cpuSchema")
-public class CpuDto {
+@Table(name="cpu")
+public class Cpu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private Long id;
     private String brand;
     private String model;
     private String socket;
@@ -31,19 +32,24 @@ public class CpuDto {
     @Column(name = "pcie_version")
     private String pcieVersion;
     private String packaging;
-    private double price;
+    private BigDecimal price;
     private String currency;
-    @Column(name = "stock_availiable")
-    private boolean stockAvailiable;
+    @Column(name = "stock_available")
+    private boolean stockAvailable;
+    @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private OffsetDateTime createdAt;
+    @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDate updatedAt;
+    private OffsetDateTime  updatedAt;
 
-    public CpuDto(BigInteger id, String brand, String model, String socket, int cores,
-                  int threads, double baseClock, double boostClock, int tdp, String integratedGraphics,
-                  int maxMemorySpeed, String memoryType, String pcieVersion, String packaging, double price,
-                  String currency, boolean stockAvailiable, LocalDate createdAt, LocalDate updatedAt) {
+    public Cpu() {
+    }
+
+    public Cpu(Long id, String brand, String model, String socket, int cores,
+               int threads, double baseClock, double boostClock, int tdp, String integratedGraphics,
+               int maxMemorySpeed, String memoryType, String pcieVersion, String packaging, BigDecimal price,
+               String currency, boolean stockAvailable, OffsetDateTime  createdAt, OffsetDateTime  updatedAt) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -60,16 +66,16 @@ public class CpuDto {
         this.packaging = packaging;
         this.price = price;
         this.currency = currency;
-        this.stockAvailiable = stockAvailiable;
+        this.stockAvailable = stockAvailable;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -177,11 +183,11 @@ public class CpuDto {
         this.packaging = packaging;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -193,27 +199,27 @@ public class CpuDto {
         this.currency = currency;
     }
 
-    public boolean isStockAvailiable() {
-        return stockAvailiable;
+    public boolean isStockAvailable() {
+        return stockAvailable;
     }
 
-    public void setStockAvailiable(boolean stockAvailiable) {
-        this.stockAvailiable = stockAvailiable;
+    public void setStockAvailable(boolean stockAvailable) {
+        this.stockAvailable = stockAvailable;
     }
 
-    public LocalDate getCreatedAt() {
+    public OffsetDateTime  getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(OffsetDateTime  createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDate getUpdatedAt() {
+    public OffsetDateTime  getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
+    public void setUpdatedAt(OffsetDateTime  updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

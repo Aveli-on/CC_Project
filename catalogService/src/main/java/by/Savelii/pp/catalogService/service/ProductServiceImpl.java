@@ -1,3 +1,4 @@
+/*
 package by.Savelii.pp.catalogService.service;
 
 import by.Savelii.pp.catalogService.service.dto.CreateProductDto;
@@ -7,9 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
-
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -22,13 +21,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String createProduct(CreateProductDto createProductDto) throws ExecutionException, InterruptedException {
+    public String createProduct() throws ExecutionException, InterruptedException {
         //TODO save DB
-        String productId = UUID.randomUUID().toString();
-        ProductCreatedEvent productCreatedEvent = new ProductCreatedEvent(productId,
-                createProductDto.getTitle(),
-                createProductDto.getPrice(),
-                createProductDto.getQuantity());
 
 
         SendResult<String, ProductCreatedEvent> result = kafkaTemplate
@@ -38,17 +32,22 @@ public class ProductServiceImpl implements ProductService {
         LOGGER.info("Topic: {}", result.getRecordMetadata().topic());
         LOGGER.info("Ofset: {}", result.getRecordMetadata().offset());
 
-        /*future.whenComplete((result,exception)->{
+        */
+/*future.whenComplete((result,exception)->{
             if(exception!=null){
                 LOGGER.error("failed to send message: {}",exception.getMessage());
             }
             else   {
                 LOGGER.info("Message sent succesfully: {}",result.getRecordMetadata());
             }
-        });*/
-        /*future.join();*/
+        });*//*
+
+        */
+/*future.join();*//*
+
 
         LOGGER.info("Return: {}", productId);
         return productId;
     }
 }
+*/

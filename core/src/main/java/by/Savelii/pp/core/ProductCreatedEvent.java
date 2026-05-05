@@ -1,53 +1,62 @@
 package by.Savelii.pp.core;
 
-import java.math.BigDecimal;
+import java.util.Map;
 
 public class ProductCreatedEvent {
-    private String productId;
-    private String title;
-    private BigDecimal price;
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public ProductCreatedEvent(String productId, String title, BigDecimal price, Integer quantity) {
-        this.productId = productId;
-        this.title = title;
-        this.price = price;
-        this.quantity = quantity;
-    }
+    private Long id;
+    private String brand;
+    private String model;
+    private ComponentType componentType;
+    private Map<String,String> specifications;
 
     public ProductCreatedEvent() {
     }
 
-    private Integer quantity;
+    public ProductCreatedEvent(Long id, String brand, String model, ComponentType componentType, Map<String, String> specifications) {
+        this.id = id;
+        this.brand = brand;
+        this.model = model;
+        this.componentType = componentType;
+        this.specifications = specifications;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public ComponentType getComponentType() {
+        return componentType;
+    }
+
+    public void setComponentType(ComponentType componentType) {
+        this.componentType = componentType;
+    }
+
+    public Map<String, String> getSpecifications() {
+        return specifications;
+    }
+
+    public void setSpecifications(Map<String, String> specifications) {
+        this.specifications = specifications;
+    }
 }

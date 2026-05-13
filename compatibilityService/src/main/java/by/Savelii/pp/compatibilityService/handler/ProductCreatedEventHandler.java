@@ -2,6 +2,7 @@ package by.Savelii.pp.compatibilityService.handler;
 
 import by.Savelii.pp.compatibilityService.exception.NonRetryableException;
 import by.Savelii.pp.compatibilityService.exception.RetryableException;
+import by.Savelii.pp.compatibilityService.service.ComponentService;
 import by.Savelii.pp.core.ProductCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,22 +16,24 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-
 @Component
-@KafkaListener(topics="product-created-events-topic"/*, groupId = "product-created-events"*/)
+@KafkaListener(topics = "product-created-events-topic")
 public class ProductCreatedEventHandler {
     private RestTemplate restTemplate;
     private final Logger LOGGER= LoggerFactory.getLogger(this.getClass());
+    private ComponentService componentService;
 
-    public ProductCreatedEventHandler(RestTemplate restTemplate) {
+    public ProductCreatedEventHandler(RestTemplate restTemplate, ComponentService componentService) {
         this.restTemplate = restTemplate;
+        this.componentService = componentService;
     }
 
     @KafkaHandler
     public void handle(ProductCreatedEvent productCreatedEvent){
 
-        LOGGER.info("Received event: {}",productCreatedEvent.getTitle());
-        String url="http://localhost:8090/response/200";
+        LOGGER.info("Received event: {}",productCreatedEvent.getBrand());
+        componentService.handlerProductCreatedEvent(productCreatedEvent);
+        /*String url="http://localhost:8090/response/200";
         try {
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
             if (response.getStatusCode().value()== HttpStatus.OK.value()){
@@ -48,6 +51,6 @@ public class ProductCreatedEventHandler {
         catch (Exception e){
             LOGGER.error(e.getMessage());
             throw new NonRetryableException(e);
-        }
+        }*/
     }
 }

@@ -31,22 +31,26 @@ public class CpuService {
     }
     @Transactional
     public CpuResponse create(CpuRequest cpuRequest) {
-        Cpu newCpu= CpuMapper.toEntity(cpuRequest);
-        Cpu save = cpuRepository.save(newCpu);
-        LOGGER.info("Создан процессор с id: {}",save.getId());
-        CompletableFuture<SendResult<String, ProductCreatedEvent>> future= kafkaTemplate.send("product-created-events-topic",save.getId().toString(),new ProductCreatedEvent(save.getId(),save.getBrand(),save.getModel(), ComponentType.CPU,CpuMapper.toSpecificationMap(save)));
-        future.whenComplete((result,exception)->{
-            if(exception!=null){
-                LOGGER.error("failed to send message: {}",exception.getMessage());
-            }
-            else   {
-                LOGGER.info("Message sent successfully: {}",result.getRecordMetadata());
-            }
-        });
+        Optional<Cpu> cpu=cpuRepository.findByBrandAndModel(cpuRequest.getBrand(),cpuRequest.getModel());
+        if(cpu.isPresent()){
+            LOGGER.info("Processor {} {} exist",cpuRequest.getBrand(),cpuRequest.getModel());
+        }else {
+            Cpu newCpu = CpuMapper.toEntity(cpuRequest);
+            Cpu save = cpuRepository.save(newCpu);
+            cpu=Optional.of(save);
+            LOGGER.info("Создан процессор с id: {}", save.getId());
+            CompletableFuture<SendResult<String, ProductCreatedEvent>> future = kafkaTemplate.send("product-created-events-topic", save.getId().toString(), new ProductCreatedEvent(save.getId(), save.getBrand(), save.getModel(), ComponentType.CPU, CpuMapper.toSpecificationsMap(save)));
+            future.whenComplete((result, exception) -> {
+                if (exception != null) {
+                    LOGGER.error("failed to send message: {}", exception.getMessage());
+                } else {
+                    LOGGER.info("Message sent successfully: {}", result.getRecordMetadata());
+                }
+            });
+        }
 
 
-
-        return CpuMapper.toResponse(save);
+        return CpuMapper.toResponse(cpu.get());
     }
     @Transactional
     public CpuResponse updateById(Long id,CpuRequest cpuRequest) {
@@ -55,7 +59,7 @@ public class CpuService {
             LOGGER.error("Запрос на обновление процессора с id : {} , ОШИБКА", id);
             throw new IllegalStateException("Пользователя с таким id не существует");
         }
-        CpuMapper.toUpdatedEntity(optionalCpu.get(),cpuRequest);
+        CpuMapper.toUpdateEntity(optionalCpu.get(),cpuRequest);
         cpuRepository.save(optionalCpu.get());
         return CpuMapper.toResponse(optionalCpu.get());
     }

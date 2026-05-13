@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name="cpu")
+@Table(name="cpu",uniqueConstraints = @UniqueConstraint(columnNames = {"brand","model"}))
 public class Cpu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,29 +18,21 @@ public class Cpu {
     private String socket;
     private int cores;
     private int threads;
-    @Column(name = "base_clock")
     private double baseClock;
-    @Column(name = "boost_clock")
     private double boostClock;
     private int tdp;
-    @Column(name = "integrated_graphics")
     private String integratedGraphics;
-    @Column(name = "max_memory_speed")
     private int maxMemorySpeed;
-    @Column(name = "memory_type")
     private String memoryType;
-    @Column(name = "pcie_version")
     private String pcieVersion;
     private String packaging;
     private BigDecimal price;
     private String currency;
-    @Column(name = "stock_available")
     private boolean stockAvailable;
+    @Column(updatable = false)
     @CreationTimestamp
-    @Column(name = "created_at")
     private OffsetDateTime createdAt;
     @UpdateTimestamp
-    @Column(name = "updated_at")
     private OffsetDateTime  updatedAt;
 
     public Cpu() {

@@ -1,8 +1,5 @@
 package by.Savelii.pp.catalogService.dto;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
@@ -38,13 +35,14 @@ public class CpuRequest {
     @NotBlank
     @Size(min = 3,max = 3)
     private String currency;
+    @NotNull
     private boolean stockAvailable;
 
-    public boolean isStockAvailable() {
+    public @NotNull boolean isStockAvailable() {
         return stockAvailable;
     }
 
-    public void setStockAvailable(boolean stockAvailable) {
+    public void setStockAvailable(@NotNull boolean stockAvailable) {
         this.stockAvailable = stockAvailable;
     }
 

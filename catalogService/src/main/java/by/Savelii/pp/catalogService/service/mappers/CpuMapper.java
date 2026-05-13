@@ -28,7 +28,7 @@ public class CpuMapper {
         cpu.setStockAvailable(cpuRequest.isStockAvailable());
         return cpu;
     }
-    public static void toUpdatedEntity(Cpu cpu,CpuRequest cpuRequest){
+    public static void toUpdateEntity(Cpu cpu,CpuRequest cpuRequest){
         cpu.setBrand(cpuRequest.getBrand());
         cpu.setModel(cpuRequest.getModel());
         cpu.setSocket(cpuRequest.getSocket());
@@ -69,7 +69,7 @@ public class CpuMapper {
         cpuResponse.setUpdatedAt(cpu.getUpdatedAt());
         return cpuResponse;
     }
-    public static Map<String,String> toSpecificationMap(Cpu cpu){
+    public static Map<String,String> toSpecificationsMap(Cpu cpu){
         Map<String,String> map=new HashMap<>();
         map.put("socket", cpu.getSocket());
         map.put("tdp", String.valueOf(cpu.getTdp()));

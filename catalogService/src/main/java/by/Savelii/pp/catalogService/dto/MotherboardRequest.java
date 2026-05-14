@@ -35,9 +35,9 @@ public class MotherboardRequest {
     private String videoPorts  ;
     @Positive
     private int sataPorts   ;
-    @Pattern(regexp = "^\\d\\.\\d$")
+    @NotBlank
     private String lan;
-    @Pattern(regexp = "^\\d\\.\\d$")
+    @NotBlank
     private String wifi;
     @NotBlank
     private String audioChipset;

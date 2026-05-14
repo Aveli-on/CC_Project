@@ -25,28 +25,28 @@ public class CpuController {
 
     @PostMapping
     public ResponseEntity<CpuResponse> create(@Valid @RequestBody CpuRequest cpuRequest){
-        LOGGER.info("Запрос на создание объекта: {} - {}",cpuRequest.getBrand(),cpuRequest.getModel());
+        LOGGER.info("Request for create cpu, id: {} - {}",cpuRequest.getBrand(),cpuRequest.getModel());
         return ResponseEntity.status(HttpStatus.CREATED).body(cpuService.create(cpuRequest));
     }
     @GetMapping("{id}")
     public ResponseEntity<CpuResponse> getById(@PathVariable Long id){
-        LOGGER.info("Запрос на поиск объекта с id: {}",id);
+        LOGGER.info("Request for search cpu, id: {}",id);
         return ResponseEntity.status(HttpStatus.OK).body(cpuService.getById(id));
     }
     @GetMapping
     public ResponseEntity<List<CpuResponse>> getAll(){
-        LOGGER.info("Запрос на поиск всех объектов");
+        LOGGER.info("Request for search all objects");
         return ResponseEntity.status(HttpStatus.OK).body(cpuService.getAll());
     }
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id){
-        LOGGER.info("Запрос на удаление объекта с id: {}",id);
+        LOGGER.info("Request for delete cpu, id: {}",id);
         cpuService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
     @PutMapping("{id}")
     public ResponseEntity<CpuResponse> updateById(@PathVariable Long id ,@Valid @RequestBody CpuRequest cpuRequest){
-        LOGGER.info("Запрос на обновление объекта с id: {}",id);
+        LOGGER.info("Request for update cpu, id: {}",id);
         return ResponseEntity.status(HttpStatus.OK).body(cpuService.updateById(id,cpuRequest));
     }
 }

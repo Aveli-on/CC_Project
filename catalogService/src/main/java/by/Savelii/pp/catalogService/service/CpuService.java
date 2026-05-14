@@ -38,13 +38,13 @@ public class CpuService {
             Cpu newCpu = CpuMapper.toEntity(cpuRequest);
             Cpu save = cpuRepository.save(newCpu);
             cpu=Optional.of(save);
-            LOGGER.info("Создан процессор с id: {}", save.getId());
+            LOGGER.info("Processor created success, id: {}", save.getId());
             CompletableFuture<SendResult<String, ProductCreatedEvent>> future = kafkaTemplate.send("product-created-events-topic", save.getId().toString(), new ProductCreatedEvent(save.getId(), save.getBrand(), save.getModel(), ComponentType.CPU, CpuMapper.toSpecificationsMap(save)));
             future.whenComplete((result, exception) -> {
                 if (exception != null) {
-                    LOGGER.error("failed to send message: {}", exception.getMessage());
+                    LOGGER.error("failed to send message (CP): {}", exception.getMessage());
                 } else {
-                    LOGGER.info("Message sent successfully: {}", result.getRecordMetadata());
+                    LOGGER.info("Message sent successfully (CP): {}", result.getRecordMetadata());
                 }
             });
         }

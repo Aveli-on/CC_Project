@@ -47,7 +47,7 @@ public class MotherboardController {
     }
     @PutMapping("{id}")
     public ResponseEntity<MotherboardResponse> updateById(@PathVariable Long id ,@Valid @RequestBody MotherboardRequest motherboardRequest){
-        LOGGER.info("Запрос на обновление объекта с id: {}",id);
+        LOGGER.info("Request for update motherboard, id: {}",id);
         return ResponseEntity.status(HttpStatus.OK).body(motherboardService.updateById(id,motherboardRequest));
     }
 }
